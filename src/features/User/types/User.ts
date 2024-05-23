@@ -13,5 +13,10 @@ export type User = {
   address: Address;
   description: string;
 };
-
+export type SortKey =
+  | keyof User
+  | 'address.state'
+  | 'address.streetAddress'
+  | 'address.city'
+  | 'address.zip';
 export type userId = User['id'];
