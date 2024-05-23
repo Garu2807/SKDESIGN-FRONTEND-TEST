@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { SortKey, User } from './types/User';
+import { SortKey, User } from '../types/User';
 
 const getNestedValue = (obj: any, path: string) =>
   path.split('.').reduce((acc, part) => acc && acc[part], obj);

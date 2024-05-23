@@ -4,8 +4,8 @@ import { RootState, useAppDispatch } from '../../store';
 import UserItem from './UserItem';
 import { loadUsers } from './UserSlice';
 import './style.css';
-import useSort from './useSorte';
-import { SortKey } from './types/User';
+import useSort from './hooks/useSorte';
+import usePage from './hooks/usePage';
 
 function UserList(): JSX.Element {
   const { users } = useSelector((store: RootState) => store.users);
@@ -13,9 +13,29 @@ function UserList(): JSX.Element {
 
   useEffect(() => {
     dispatch(loadUsers());
-  }, [dispatch]);
+  }, []);
 
   const { items: sortedUsers, requestSort, getClassNamesFor } = useSort(users);
+
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(sortedUsers.length / itemsPerPage);
+
+  const { currentPage, goToPage, goToNextPage, goFirtPage } =
+    usePage(totalPages);
+
+  const indexOfLastUser = currentPage * itemsPerPage;
+  const indexOfFirstUser = indexOfLastUser - itemsPerPage;
+  const currentUsers = sortedUsers.slice(indexOfFirstUser, indexOfLastUser);
+  let startPage = currentPage - 2;
+  let endPage = currentPage + 2;
+  if (startPage < 1) {
+    startPage = 1;
+    endPage = Math.min(totalPages, 5);
+  }
+  if (endPage > totalPages) {
+    endPage = totalPages;
+    startPage = Math.max(1, totalPages - 4);
+  }
 
   return (
     <div className="user_list">
@@ -76,20 +96,34 @@ function UserList(): JSX.Element {
             >
               zip
             </th>
-            <th
-              onClick={() => requestSort('description')}
-              className={getClassNamesFor('description')}
-            >
-              description
-            </th>
           </tr>
         </thead>
         <tbody>
-          {sortedUsers.map((user, index) => (
+          {currentUsers.map((user, index) => (
             <UserItem user={user} key={`${user.id}-${index}`} />
           ))}
         </tbody>
       </table>
+      <div className="pagination">
+        <button onClick={() => goFirtPage()} disabled={currentPage === 1}>
+          Пред
+        </button>
+        {Array.from({ length: endPage - startPage + 1 }, (_, i) => (
+          <button
+            key={startPage + i}
+            onClick={() => goToPage(startPage + i)}
+            className={currentPage === startPage + i ? 'active' : ''}
+          >
+            {startPage + i}
+          </button>
+        ))}
+        <button
+          onClick={() => goToNextPage()}
+          disabled={currentPage === totalPages}
+        >
+          След
+        </button>
+      </div>
     </div>
   );
 }
