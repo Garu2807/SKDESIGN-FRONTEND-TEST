@@ -13,7 +13,7 @@ const usePage = (totalPages: number) => {
     );
   };
 
-  const goFirtPage = () => {
+  const goFirstPage = () => {
     setCurrentPage(1);
   };
   const getPageBlocks = () => {
@@ -29,7 +29,7 @@ const usePage = (totalPages: number) => {
     goToPage,
     goToNextPage,
     getPageBlocks,
-    goFirtPage,
+    goFirstPage,
   };
 };
 

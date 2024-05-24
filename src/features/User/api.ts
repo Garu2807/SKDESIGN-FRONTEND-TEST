@@ -1,11 +1,20 @@
 import { User } from './types/User';
 
 export const loadUsers = async (): Promise<User[]> => {
-  const res = await fetch(
-    'http://www.filltext.com/?rows=100&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}'
-  );
-  const data = res.json();
-  console.log(data);
-  return data;
+  try {
+    const res = await fetch(
+      'http://www.filltext.com/?rows=1000&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}'
+    );
+    const data = await res.json();
+    
+    // Фильтруем массив данных(удаляем дубликаты по id)
+    const uniqueData = data.filter((user: { id: any; }, index: any, self: any[]) =>
+      index === self.findIndex((t) => t.id === user.id)
+    );
+
+    return uniqueData;
+  } catch (error) {
+    console.error('Произошла ошибка при загрузке:', error);
+    return [];
+  }
 };
-loadUsers();
