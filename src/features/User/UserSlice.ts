@@ -35,6 +35,14 @@ const UserSlice = createSlice({
         containsSubstring(user, searchTerm)
       );
     },
+    addUser: (state, action) => {
+      const id = Math.floor(Math.random() * (1000 - 1)) + 1;
+      const isAlreadyAdded = state.users.some((user) => user.id === id);
+      if (!isAlreadyAdded) {
+        state.users.push(action.payload);
+        localStorage.setItem('usersState', JSON.stringify(state));
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(loadUsers.fulfilled, (state, action) => {
@@ -47,5 +55,5 @@ const UserSlice = createSlice({
   },
 });
 
-export const { searchUser } = UserSlice.actions;
+export const { searchUser, addUser } = UserSlice.actions;
 export default UserSlice.reducer;

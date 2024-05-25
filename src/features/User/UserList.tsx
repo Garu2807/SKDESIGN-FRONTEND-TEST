@@ -4,7 +4,7 @@ import { RootState, useAppDispatch } from '../../store';
 import UserItem from './UserItem';
 import { loadUsers, searchUser } from './UserSlice';
 import './style.css';
-import useSort from './hooks/useSorte';
+import useSort from './hooks/useSort';
 import usePage from './hooks/usePage';
 
 function UserList(): JSX.Element {
@@ -19,6 +19,7 @@ function UserList(): JSX.Element {
   const {
     items: sortedUsers,
     requestSort,
+    sortConfig,
     getClassNamesFor,
   } = useSort(filteredUsers);
 
@@ -54,6 +55,13 @@ function UserList(): JSX.Element {
     startPage = Math.max(1, totalPages - 4);
   }
 
+  const getSortArrow = (key: string) => {
+    if (sortConfig && sortConfig.key === key) {
+      return sortConfig.direction === 'ascending' ? ' ▲' : ' ▼';
+    }
+    return null;
+  };
+
   return (
     <div className="user_list">
       <form onSubmit={handleSearch}>
@@ -72,55 +80,55 @@ function UserList(): JSX.Element {
               onClick={() => requestSort('id')}
               className={getClassNamesFor('id')}
             >
-              id
+              id {getSortArrow('id')}
             </th>
             <th
               onClick={() => requestSort('firstName')}
               className={getClassNamesFor('firstName')}
             >
-              firstName
+              firstName {getSortArrow('firstName')}
             </th>
             <th
               onClick={() => requestSort('lastName')}
               className={getClassNamesFor('lastName')}
             >
-              lastName
+              lastName {getSortArrow('lastName')}
             </th>
             <th
               onClick={() => requestSort('email')}
               className={getClassNamesFor('email')}
             >
-              email
+              email {getSortArrow('email')}
             </th>
             <th
               onClick={() => requestSort('phone')}
               className={getClassNamesFor('phone')}
             >
-              phone
+              phone {getSortArrow('phone')}
             </th>
             <th
               onClick={() => requestSort('address.state')}
               className={getClassNamesFor('address.state')}
             >
-              state
+              state {getSortArrow('address.state')}
             </th>
             <th
               onClick={() => requestSort('address.city')}
               className={getClassNamesFor('address.city')}
             >
-              city
+              city {getSortArrow('address.city')}
             </th>
             <th
               onClick={() => requestSort('address.streetAddress')}
               className={getClassNamesFor('address.streetAddress')}
             >
-              address
+              address {getSortArrow('address.streetAddress')}
             </th>
             <th
               onClick={() => requestSort('address.zip')}
               className={getClassNamesFor('address.zip')}
             >
-              zip
+              zip {getSortArrow('address.zip')}
             </th>
           </tr>
         </thead>
