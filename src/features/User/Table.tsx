@@ -1,5 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // используем useNavigate для перенаправления
+import React, { useEffect, useMemo, useState } from 'react'; // используем useNavigate для перенаправления
 import {
   MaterialReactTable,
   useMaterialReactTable,

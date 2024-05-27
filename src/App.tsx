@@ -2,9 +2,6 @@ import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useAppDispatch } from './store';
 import { loadUsers } from './features/User/UserSlice';
-import UserList from './features/User/UserList';
-import AddUserForm from './features/User/AddUserForm';
-import UserPage from './features/User/UserPage';
 import './App.css';
 import Table from './features/User/Table';
 
