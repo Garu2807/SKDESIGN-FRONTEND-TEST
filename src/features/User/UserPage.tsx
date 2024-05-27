@@ -1,46 +1,38 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from '../../store';
-import { loadUsers } from './UserSlice';
+import React from 'react';
+import { User } from './types/User';
+import './style.css';
 
-function UserPage(): JSX.Element {
-  const { id } = useParams<{ id: string }>();
-  const dispatch = useAppDispatch();
-  const { users } = useSelector((store: RootState) => store.users);
-  const oneUser = users.find((user) => user.id === Number(id));
+type UserPageProps = {
+  user: User;
+  onClose: () => void;
+};
 
-  useEffect(() => {
-    if (!users.length) {
-      dispatch(loadUsers());
-    }
-  }, [dispatch, users.length]);
-
-  if (!oneUser) {
-    return <div>Загрузка...</div>;
-  }
-
+function UserPage({ user, onClose }: UserPageProps): JSX.Element {
   return (
     <div className="user_info">
       <p>
-        Выбран пользователь <b>{`${oneUser.firstName} ${oneUser.lastName}`}</b>
+        Выбран пользователь{' '}
+        <b>
+          {user.firstName} {user.lastName}
+        </b>
       </p>
       <p>
         Описание:
-        <textarea name="descr" id="">{`${oneUser.description}`}</textarea>
+        <textarea readOnly value={user.description} />
       </p>
       <p>
-        Адрес проживания: <b>{`${oneUser.address.streetAddress}`}</b>
+        Адрес проживания: <b>{user.address.streetAddress}</b>
       </p>
       <p>
-        Город: <b>{`${oneUser.address.city}`}</b>
+        Город: <b>{user.address.city}</b>
       </p>
       <p>
-        Провинция/штат: <b>{`${oneUser.address.state}`}</b>
+        Провинция/штат: <b>{user.address.state}</b>
       </p>
       <p>
-        Индекс: <b>{`${oneUser.address.zip}`}</b>
+        Индекс: <b>{user.address.zip}</b>
       </p>
+      <button onClick={onClose}>Закрыть</button>
     </div>
   );
 }

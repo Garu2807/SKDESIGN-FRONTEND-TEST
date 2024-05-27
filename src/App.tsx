@@ -10,7 +10,7 @@ function App(): JSX.Element {
       <Routes>
         <Route path="/form" element={<AddUserForm />} />
         <Route path="/" element={<UserList />} />
-        <Route path="/:id" element={<UserPage />} />
+        {/* <Route path="/:id" element={<UserPage />} /> */}
       </Routes>
     </div>
   );
