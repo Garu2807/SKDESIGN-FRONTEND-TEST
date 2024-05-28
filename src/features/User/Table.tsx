@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'; // используем useNavigate для перенаправления
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -11,6 +11,7 @@ import { loadUsers } from './UserSlice';
 import { User } from './types/User';
 import './style.css';
 import UserPage from './UserPage';
+import AddUserForm from './AddUserForm';
 
 function Table(): JSX.Element {
   const users = useSelector((store: RootState) => store.users.users);
@@ -20,10 +21,9 @@ function Table(): JSX.Element {
     dispatch(loadUsers());
   }, [dispatch]);
   const handleCloseClick = () => {
-    setSelectedUser(null); // Сброс выбранного пользователя
+    setSelectedUser(null);
   };
 
-  // Мемоизация колонок для предотвращения ненужных перерисовок
   const columns = useMemo<MRT_ColumnDef<User>[]>(
     () => [
       {
@@ -90,6 +90,7 @@ function Table(): JSX.Element {
           <UserPage user={selectedUser} onClose={handleCloseClick} />
         )}
       </div>
+      <AddUserForm />
     </>
   );
 }

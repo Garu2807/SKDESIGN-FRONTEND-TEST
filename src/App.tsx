@@ -9,14 +9,13 @@ function App(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(loadUsers()); // Загружаем пользователей при первой загрузке приложения
+    dispatch(loadUsers()); 
   }, [dispatch]);
 
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Table />} />
-        {/* <Route path="/form" element={<AddUserForm />} /> */}
       </Routes>
     </div>
   );

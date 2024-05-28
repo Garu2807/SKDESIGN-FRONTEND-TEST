@@ -6,13 +6,11 @@ const store = configureStore({
   reducer: { users: userReducer },
 });
 
-// для правильной типизации будем использовать useAppDispatch вместоuseDispatch
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: <T>(fn: (state: RootState) => T) => T =
   useSelector;
 
-/* Какой тип будет у функции store.getState -> тот и будет типа RootState */
 export type RootState = ReturnType<typeof store.getState>;
 
 export default store;
