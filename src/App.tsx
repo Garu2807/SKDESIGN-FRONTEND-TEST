@@ -1,10 +1,8 @@
-import { useEffect } from 'react';
 import './App.css';
-import { useAppDispatch } from './store';
-import { loadUsers } from './features/User/UserSlice';
 import { Route, Routes } from 'react-router-dom';
 import UserList from './features/User/UserList';
 import AddUserForm from './features/User/AddUserForm';
+import UserPage from './features/User/UserPage';
 
 function App(): JSX.Element {
   return (
@@ -12,6 +10,7 @@ function App(): JSX.Element {
       <Routes>
         <Route path="/form" element={<AddUserForm />} />
         <Route path="/" element={<UserList />} />
+        {/* <Route path="/:id" element={<UserPage />} /> */}
       </Routes>
     </div>
   );
